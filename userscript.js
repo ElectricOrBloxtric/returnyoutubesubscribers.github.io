@@ -64,14 +64,17 @@ async function fetchSubscriberData(channelId, targetSelectorIndex, element) {
             console.log(subscriberText)
 
             if (element) {
-                element.innerText = parseInt(subscriberText).toLocaleString(strType) + " subscribers";
+                element.textContent = parseInt(subscriberText).toLocaleString(strType) + " subscribers";
             } else {
                 const targetElement = document.querySelector(possibleSubCounters[targetSelectorIndex]);
 
                 if (!targetElement) return;
                 if (subscriberText !== undefined && subscriberText !== null) {
+                    // Check if already loaded to prevent duplicate updates
+                    if (targetElement.getAttribute("loaded") === "true") return;
+                    
                     subscriberText = String(subscriberText).trim();
-                    targetElement.innerText = parseInt(subscriberText).toLocaleString(strType) + " subscribers";
+                    targetElement.textContent = parseInt(subscriberText).toLocaleString(strType) + " subscribers";
                     targetElement.setAttribute("loaded", "true");
                     targetElement.removeAttribute("is-empty");
                     subs = parseInt(subscriberText);
