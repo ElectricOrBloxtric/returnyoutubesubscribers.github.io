@@ -17,7 +17,8 @@ const strType = "en-US";
 
 const possibleSubCounters = [
     "#owner-sub-count",
-    "#page-header > yt-page-header-renderer > yt-page-header-view-model > div > div.yt-page-header-view-model__page-header-headline > div > yt-content-metadata-view-model > div:nth-child(3) > span:nth-child(1)"
+    "#page-header > yt-page-header-renderer > yt-page-header-view-model > div > div.yt-page-header-view-model__page-header-headline > div > yt-content-metadata-view-model > div:nth-child(3) > span:nth-child(1)",
+    "#additional-info-container > table > tbody > tr:nth-child(6) > td:nth-child(2)"
 ];
 
 function getValueFromJson(json, path) {
@@ -42,11 +43,14 @@ function check() {
     } else {
         const subscriberCount = document.querySelector(possibleSubCounters[1]);
         const ownerSubCount = document.querySelector(possibleSubCounters[0]);
+        const additionalInfoCount = document.querySelector(possibleSubCounters[2]);
 
         if (subscriberCount) {
             stats();
         } else if (ownerSubCount) {
             stats2();
+        } else if (additionalInfoCount) {
+            stats3();
         } else {
             setTimeout(check, 100);
         }
@@ -113,6 +117,20 @@ function stats2() {
         const channelId = extractChannelId(res);
         if (channelId) {
             fetchSubscriberData(channelId, 0);
+        }
+    }
+}
+
+function stats3() {
+    const req = new XMLHttpRequest();
+    req.open("GET", currentURL, false);
+    req.send(null);
+
+    if (req.status === 200) {
+        const res = req.responseText;
+        const channelId = extractChannelId(res);
+        if (channelId) {
+            fetchSubscriberData(channelId, 2);
         }
     }
 }
