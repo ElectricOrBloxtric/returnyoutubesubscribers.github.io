@@ -17,7 +17,7 @@ const strType = "en-US";
 
 const possibleSubCounters = [
     "#owner-sub-count",
-    "#page-header > yt-page-header-renderer > yt-page-header-view-model > div > div.yt-page-header-view-model__page-header-headline > div > yt-content-metadata-view-model > div:nth-child(3) > span:nth-child(1)"
+    "#page-header > yt-page-header-renderer > yt-page-header-view-model > div > div.ytPageHeaderViewModelHeadline > div > yt-content-metadata-view-model > div:nth-child(3) > span:nth-child(1)"
 ];
 
 function getValueFromJson(json, path) {
