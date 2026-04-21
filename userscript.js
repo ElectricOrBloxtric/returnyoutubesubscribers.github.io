@@ -71,7 +71,6 @@ async function fetchSubscriberData(channelId, targetSelectorIndex, element) {
 
                 if (!targetElement) return;
                 if (subscriberText !== undefined && subscriberText !== null) {
-                    // Check if already loaded to prevent duplicate updates
                     if (targetElement.getAttribute("loaded") === "true") return;
                     
                     subscriberText = String(subscriberText).trim();
@@ -82,10 +81,8 @@ async function fetchSubscriberData(channelId, targetSelectorIndex, element) {
                     subs = parseInt(subscriberText);
                     lastFetchedSubscriberCount = formattedCount;
                     
-                    // Remove unabbreviated subscriber count if it exists
                     const ownerSubCount = document.querySelector("#owner-sub-count");
                     if (ownerSubCount && ownerSubCount.childNodes.length > 1) {
-                        // Remove the second text node containing the unabbreviated count
                         for (let i = ownerSubCount.childNodes.length - 1; i >= 0; i--) {
                             const node = ownerSubCount.childNodes[i];
                             if (node.nodeType === Node.TEXT_NODE && node.textContent.match(/^\d+/)) {
@@ -94,7 +91,6 @@ async function fetchSubscriberData(channelId, targetSelectorIndex, element) {
                         }
                     }
                     
-                    // Update the additional info container when it appears
                     const updateAdditionalInfo = () => {
                         const additionalInfoElement = document.querySelector("#additional-info-container > table > tbody > tr:nth-child(6) > td:nth-child(2)");
                         if (additionalInfoElement) {
@@ -103,10 +99,8 @@ async function fetchSubscriberData(channelId, targetSelectorIndex, element) {
                         }
                     };
                     
-                    // Check immediately in case it's already there
                     updateAdditionalInfo();
                     
-                    // Then check periodically for when the modal appears
                     const infoCheckInterval = setInterval(updateAdditionalInfo, 500);
                 }
             }
